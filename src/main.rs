@@ -1,5 +1,8 @@
 use std::fs;
 use std::env;
+use std::string::String;
+
+const BASE_PATH: &str = "/home/mitchell/pnew";
 
 fn main()
 {
@@ -36,14 +39,29 @@ fn run(path: String)
                 if let Some(uploader) = file_name.get(us_pos[1] + 1..us_pos[0])
                 {
                     println!("{}", uploader);
+                    let mut new_file_name: String = String::from(BASE_PATH);
+                    new_file_name.push_str("/");
+                    new_file_name.push_str(uploader);
+                    new_file_name.push_str("/");
+                    new_file_name.push_str(file_name);
+
+                    //let mut original_file_name: String = String::from(path);
+                    let mut orig_file_name: String = String::from("/home/mitchell/");
+                    orig_file_name.push_str(file_name);
+
+                    println!("{}", orig_file_name);
+                    println!("{}", new_file_name);
+                    match fs::rename(orig_file_name, new_file_name)
+                    {
+                        Ok(_) => println!("Renamed"),
+                        Err(why) => println!("{}", why),
+                    };
+
+
+                    //println!("{}", new_file_name);
                 }
                 break;
             }
-            //match c
-            //{
-                // (index, '_') => underscore_count += 1; underscore_indices.push(index)),
-                // _ => (),
-            // }
         }
     }
 }
